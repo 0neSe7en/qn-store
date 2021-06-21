@@ -12,7 +12,6 @@ const Promise = require('bluebird');
 const moment = require('moment');
 const qn = require('qn');
 const StorageBase = require('ghost-storage-base');
-const errors = require('@tryghost/errors');
 const security = require('@tryghost/security');
 
 const getHash = require('./lib/getHash');
@@ -118,10 +117,7 @@ class QiniuStore extends StorageBase {
     return new Promise(function(resolve, reject) {
       client.download(key, function(err, content, res) {
         if (err) {
-          return reject(new errors.GhostError({
-            err: err,
-            message: `${logPrefix} Could not read image: ${options.path}`,
-          }));
+          return reject(err)
         }
 
         resolve(content);
